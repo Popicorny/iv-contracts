@@ -1,0 +1,85 @@
+{
+  "kovan": {
+    "feeds": {
+      "dai/eth": "0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541",
+      "eth/usd": "0x9326BFA02ADD2366b30bacB125260Af641031331",
+      "link/eth": "0xa36085f69e2889c224210f603d836748e7dc0088",
+      "usdc/eth": "0x986b5E1e1755e3C2440e960477f25201B0a8bbD4"
+    },
+    "assets": {
+      "dai": "0x1528F3FCc26d13F7079325Fb78D9442607781c8C",
+      "link": "0xa36085f69e2889c224210f603d836748e7dc0088",
+      "eth": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
+      "weth": "0xd0A1E359811322d97991E03f863a0C30C2cF029C",
+      "usdc": "0xcbD2c857c1ab9C4A31Ed7bf05713625C8EF8ef04",
+      "wbtc": "0xB875937e75dB003F1E43d0733173E642A1f65d45",
+      "yvweth": "0x1E0E04C1c5c57328fcB83dEd981e304812c36962",
+      "yvusdc": "0x9d54311cCaA9C0d4ee6BD60cB82A40F4B942c8b3"
+    },
+    "secondary": {
+			"comment": "There is 2 different USDC in Kovan. They are being used in different context. Different USDC are needed depending on contracts.",
+			"usdc": [
+				{
+					"name": "Old Opyn USDC",
+					"address": "0xF5Cb5408B40E819e7Db5347664Be03B52AcCAC9d",
+					"usage": [
+						"yvUSDC",
+						"Liquidity Mining Pool"
+					]
+				},
+				{
+					"name": "New Opyn",
+					"address": "0x7e6edA50d1c833bE936492BF42C1BF376239E9e2",
+					"usage": [
+						"New theta vault"
+					]
+				}
+			]
+		},
+    "yearnRegistry": "0x26a6F436EAa4Db308eF9A3Bbe46Cc495F39C366D",
+    "thetaRegistry": "0x3b8AF76FACd2032F02Add76f6993740b3964479f",
+    "airswapSwap": "0x79fb4604f2D7bD558Cda0DFADb7d61D98b28CA9f",
+    "oTokenFactory": "0xbc7a8eC0b37717F421f9478230C0E1f7c978aC11",
+    "gammaController": "0xcf719a2a3fd2a7cc440eaecb565710f741de19c4",
+    "gammaMarginPool": "0xc65224e6D61184bAa5138762F86632DAe946C3a4",
+    "balancerFactory": "0x8f7F78080219d4066A8036ccD30D588B416a40DB",
+    "uniswapV2Router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    "zeroExExchangeV3": "0x4eacd0aF335451709e1e7B570B8Ea68EdEC8bc97",
+    "multicall": "0x2cc8688c5f75e365aaeeb4ea8d6a480405a48d2a"
+  },
+  "mainnet": {
+    "feeds": {
+      "dai/eth": "0x22B58f1EbEDfCA50feF632bD73368b2FdA96D541",
+      "eth/usd": "0x5f4eC3Df9cbd43714FE2740f5E3616155c5b8419",
+      "link/eth": "0xa36085f69e2889c224210f603d836748e7dc0088",
+      "usdc/eth": "0x986b5E1e1755e3C2440e960477f25201B0a8bbD4"
+    },
+    "assets": {
+      "eth": "0x0000000000000000000000000000000000000000",
+      "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "wbtc": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "yvweth": "0xa9fe4601811213c340e850ea305481aff02f5b28",
+      "yvusdc": "0x5f18C75AbDAe578b483E5F43f12a39cF75b973a9",
+      "sushiLp": "0x9a13867048e01c663ce8ce2fe0cdae69ff9f35e3",
+      "digg": "0x798d1be841a82a273720ce31c822c61a67a601c3"
+    },
+    "yearnRegistry": "0x50c1a2eA0a861A967D9d0FFE2AE4012c2E053804",
+    "airswapSwap": "0x4572f2554421Bd64Bef1c22c8a81840E8D496BeA",
+    "oTokenFactory": "0x7C06792Af1632E77cb27a558Dc0885338F4Bdf8E",
+    "gammaController": "0x4ccc2339F87F6c59c6893E1A678c2266cA58dC72",
+    "gammaMarginPool": "0x5934807cC0654d46755eBd2848840b616256C6Ef",
+    "uniswapV2Router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
+    "zeroExExchangeV3": "0xDef1C0ded9bec7F1a1670819833240f027b25EfF",
+    "multicall": "0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441",
+    "sushiswap": "0xd9e1ce17f2641f24ae83637ab66a2cca9c378b9f"
+  },
+  "mainnet-sim": {
+    "assets": {
+      "eth": "0x0000000000000000000000000000000000000000",
+      "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+      "wbtc": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "usdc": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+    }
+  }
+}
