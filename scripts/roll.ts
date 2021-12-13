@@ -82,6 +82,7 @@ async function deployOToken() {
     gasPrice,
     gasLimit: 700000,
   });
+  await tx.wait(1);
   
   console.log(tx.hash)
   
