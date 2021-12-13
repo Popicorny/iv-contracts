@@ -78,7 +78,7 @@ async function deployOToken() {
  
   // This puts the vault into a Locked state, during which the vault will no longer accept direct withdraws or direct deposits.
   
-  const tx = await vault.connect(signer).rollToNextOption({
+  const tx = await vault.connect(signer).closeShort({
     gasPrice,
     gasLimit: 700000,
   });

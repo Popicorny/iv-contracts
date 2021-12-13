@@ -23,7 +23,6 @@ program.requiredOption("-n, --network <network>", "Network", "mainnet");
 
 program
   .requiredOption("-a, --address <address>", "Address")
-  .requiredOption("-d, --data <data>", "Data")
 
 program.parse(process.argv);
 
@@ -32,8 +31,9 @@ async function deployOToken() {
   const network = program.network === "mainnet" ? "mainnet" : "kovan";
 
   const provider = getDefaultProvider(program.network);
-  const signer = getDefaultSigner("m/44'/60'/0'/0/2", network);
-  const count = await provider.getTransactionCount(signer.address);
+  const signer = getDefaultSigner("m/44'/60'/0'/0/2", network).connect(
+    provider
+  );
 
   const vault = new ethers.Contract(
     program.address,
@@ -49,25 +49,42 @@ async function deployOToken() {
   }
 
   console.log(`Gas price: ${gasPrice.toString()}`);
+// "0xB875937e75dB003F1E43d0733173E642A1f65d45","0xcbD2c857c1ab9C4A31Ed7bf05713625C8EF8ef04","0xB875937e75dB003F1E43d0733173E642A1f65d45","1638777600","55000000000000000000000",2,"0xB875937e75dB003F1E43d0733173E642A1f65d45",
+
+  // The vault goes back into an Unlocked state once closePositions() is called. 
+  // User can deposit 
   /*
-  await vault.connect(signer).call(
-    program.data, {
+  const tx = await vault
+    .connect(signer)
+    .commitAndClose(
+      params,
+      {
+        gasPrice,
+        gasLimit: 700000,
+      }
+    );
+  // Expiry must be more than current time + 1 hr
+  console.log("Txhash: " + tx.hash);
+  const receipt = await tx.wait(1);
+  8am UTC - options expire 
+  8-10am UTC - disputes window 
+  10-11am UTC - instant withdrawal window - commit and close
+  11am UTC - deposits deployed - rollToNext
+  */
+ // 1638856812
+ // Commit then close den wait 1 hr to roll
+ // Ask need wait how long den lock
+ // console.log(await vault.connect(signer).nextOptionReadyAt());
+ 
+  // This puts the vault into a Locked state, during which the vault will no longer accept direct withdraws or direct deposits.
+  
+  const tx = await vault.connect(signer).rollToNextOption({
     gasPrice,
     gasLimit: 700000,
   });
-  */
-  // Qmdgf1xJ5M9AyYjoNMF2BuRDSwPWkPBW3qVPCGYrwfMkUK
-  var tx = {
-    to: program.address,
-    data: program.data,
-    gasPrice: gasPrice,
-    gasLimit: 700000,
-    nonce: count
-  }
   
-  const signed = await signer.signTransaction(tx);
-  const signedTx = await provider.sendTransaction(signed);
-  console.log(signedTx.hash);
+  console.log(tx.hash)
+  
   process.exit(0);
   
 }
