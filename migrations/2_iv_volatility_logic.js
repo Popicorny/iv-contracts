@@ -1,4 +1,4 @@
-const RibbonVolatility = artifacts.require("RibbonVolatility");
+const IvVolatility = artifacts.require("IvVolatility");
 const ProtocolAdapterLib = artifacts.require("ProtocolAdapter");
 const {
   updateDeployedAddresses,
@@ -22,13 +22,13 @@ module.exports = async function (_deployer, network) {
     ProtocolAdapterLib.address
   );
 
-  await deployer.link(ProtocolAdapterLib, RibbonVolatility);
+  await deployer.link(ProtocolAdapterLib, IvVolatility);
 
-  await deployer.deploy(RibbonVolatility, { from: admin });
+  await deployer.deploy(IvVolatility, { from: admin });
 
   await updateDeployedAddresses(
     network,
-    "RibbonVolatilityLogic",
-    RibbonVolatility.address
+    "IvVolatilityLogic",
+    IvVolatility.address
   );
 };

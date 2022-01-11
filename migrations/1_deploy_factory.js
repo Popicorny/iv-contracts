@@ -1,4 +1,4 @@
-const Factory = artifacts.require("RibbonFactory");
+const Factory = artifacts.require("IvFactory");
 const AdminUpgradeabilityProxy = artifacts.require("AdminUpgradeabilityProxy");
 const { encodeCall } = require("@openzeppelin/upgrades");
 const {
@@ -18,7 +18,7 @@ module.exports = async function (deployer, _network) {
 
 async function deployFactory(deployer, admin, owner) {
   await deployer.deploy(Factory, { from: admin });
-  await updateDeployedAddresses(network, "RibbonFactoryLogic", Factory.address);
+  await updateDeployedAddresses(network, "IvFactoryLogic", Factory.address);
 
   const initBytes = encodeCall(
     "initialize",
@@ -36,7 +36,7 @@ async function deployFactory(deployer, admin, owner) {
   );
   await updateDeployedAddresses(
     network,
-    "RibbonFactory",
+    "IvFactory",
     AdminUpgradeabilityProxy.address
   );
 }

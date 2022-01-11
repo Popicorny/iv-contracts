@@ -19,7 +19,7 @@ import {IAmmAdapter} from "../adapters/IAmmAdapter.sol";
 import {AmmAdapter} from "../adapters/AmmAdapter.sol";
 
 import {ProtocolAdapter} from "../adapters/ProtocolAdapter.sol";
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
 import {UniswapAdapter} from "../adapters/UniswapAdapter.sol";
 
 import {StakedPutStorageV1} from "../storage/StakedPutStorage.sol";
@@ -52,7 +52,7 @@ contract StakedPut is DSMath, StakedPutStorageV1 {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
 
-    IRibbonFactory public immutable factory;
+    IIvFactory public immutable factory;
     IProtocolAdapter public immutable adapter;
     IAmmAdapter public immutable iUniswapAdapter;
     AggregatorV3Interface public immutable priceProvider;
@@ -93,7 +93,7 @@ contract StakedPut is DSMath, StakedPutStorageV1 {
         strikeAsset = _wbtcAddress;
         collateralAsset = _collateralAsset;
         priceProvider = AggregatorV3Interface(_priceFeed);
-        IRibbonFactory factoryInstance = IRibbonFactory(_factory);
+        IIvFactory factoryInstance = IIvFactory(_factory);
         iUniswapAdapter = IAmmAdapter(_uniswapAdapterAddress);
         uniswapAdapterAddress = _uniswapAdapterAddress;
         address _adapterAddress = factoryInstance.getAdapter(venue);

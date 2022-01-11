@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.7.2;
 
-interface IRibbonFactory {
+interface IIvFactory {
     function isInstrument(address instrument) external returns (bool);
 
     function getAdapter(string calldata protocolName)

@@ -12,7 +12,7 @@ import {
     ERC20Upgradeable
 } from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
 
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
 
 contract StakedPutStorageV1 is
     OwnableUpgradeable,

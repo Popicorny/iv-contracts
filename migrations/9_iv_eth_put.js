@@ -1,4 +1,4 @@
-const RibbonThetaVault = artifacts.require("RibbonThetaVault");
+const IvThetaVault = artifacts.require("IvThetaVault");
 const AdminUpgradeabilityProxy = artifacts.require("AdminUpgradeabilityProxy");
 const ProtocolAdapterLib = artifacts.require("ProtocolAdapter");
 const { encodeCall } = require("@openzeppelin/upgrades");
@@ -15,15 +15,15 @@ module.exports = async function (deployer, network) {
   const networkLookup = network.replace("-fork", "");
   const { admin, owner } = ACCOUNTS[networkLookup];
 
-  await ProtocolAdapterLib.deployed();
+  // await ProtocolAdapterLib.deployed();
 
-  await deployer.link(ProtocolAdapterLib, RibbonThetaVault);
+  await deployer.link(ProtocolAdapterLib, IvThetaVault);
 
-  // // Deploying the logic contract
+  // Deploying the logic contract
   await deployer.deploy(
-    RibbonThetaVault,
-    EXTERNAL_ADDRESSES[networkLookup].assets.wbtc,
-    DEPLOYMENTS[networkLookup].RibbonFactory,
+    IvThetaVault,
+    EXTERNAL_ADDRESSES[networkLookup].assets.weth,
+    DEPLOYMENTS[networkLookup].IvFactory,
     DEPLOYMENTS[networkLookup].VaultRegistry,
     EXTERNAL_ADDRESSES[networkLookup].assets.weth,
     EXTERNAL_ADDRESSES[networkLookup].assets.usdc,
@@ -35,8 +35,8 @@ module.exports = async function (deployer, network) {
   );
   await updateDeployedAddresses(
     network,
-    "RibbonWBTCPutLogic",
-    RibbonThetaVault.address
+    "IvETHPutLogic",
+    IvThetaVault.address
   );
 
   // Deploying the proxy contract
@@ -46,15 +46,15 @@ module.exports = async function (deployer, network) {
     [
       owner,
       owner,
-      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros
-      "Ribbon USDC Theta Vault BTC Put",
-      "rUSDC-BTC-P-THETA",
+      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros,
+      "IV USDC Theta Vault ETH Put",
+      "iUSDC-ETH-P-THETA",
     ]
   );
 
   await deployer.deploy(
     AdminUpgradeabilityProxy,
-    RibbonThetaVault.address,
+    IvThetaVault.address,
     admin,
     initBytes,
     {
@@ -64,7 +64,7 @@ module.exports = async function (deployer, network) {
 
   await updateDeployedAddresses(
     network,
-    "RibbonWBTCPut",
+    "IvETHPut",
     AdminUpgradeabilityProxy.address
   );
 };

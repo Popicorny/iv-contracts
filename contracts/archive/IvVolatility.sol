@@ -15,11 +15,11 @@ import {
     ProtocolAdapterTypes,
     IProtocolAdapter
 } from "../adapters/IProtocolAdapter.sol";
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
 import {ProtocolAdapter} from "../adapters/ProtocolAdapter.sol";
 import {Ownable} from "../lib/Ownable.sol";
 
-contract RibbonVolatility is DSMath, InstrumentStorageV1, InstrumentStorageV2 {
+contract IvVolatility is DSMath, InstrumentStorageV1, InstrumentStorageV2 {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
     using ProtocolAdapter for IProtocolAdapter;
@@ -59,7 +59,7 @@ contract RibbonVolatility is DSMath, InstrumentStorageV1, InstrumentStorageV2 {
         require(block.timestamp < _expiry, "Expiry has already passed");
 
         Ownable.initialize(_owner);
-        factory = IRibbonFactory(_factory);
+        factory = IIvFactory(_factory);
         name = _name;
         symbol = _symbol;
         expiry = _expiry;

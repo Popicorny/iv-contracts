@@ -11,14 +11,14 @@ import {
     IProtocolAdapter
 } from "../adapters/IProtocolAdapter.sol";
 import {ProtocolAdapter} from "../adapters/ProtocolAdapter.sol";
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
 import {IWETH} from "../interfaces/IWETH.sol";
 import {IYearnRegistry, IYearnVault} from "../interfaces/IYearn.sol";
 import {ISwap, Types} from "../interfaces/ISwap.sol";
 import {OtokenInterface} from "../interfaces/GammaInterface.sol";
 import {OptionsVaultStorage} from "../storage/OptionsVaultStorage.sol";
 
-contract RibbonThetaVaultYearn is DSMath, OptionsVaultStorage {
+contract IvThetaVaultYearn is DSMath, OptionsVaultStorage {
     using ProtocolAdapter for IProtocolAdapter;
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
@@ -111,7 +111,7 @@ contract RibbonThetaVaultYearn is DSMath, OptionsVaultStorage {
         require(_tokenDecimals > 0, "!_tokenDecimals");
         require(_minimumSupply > 0, "!_minimumSupply");
 
-        IRibbonFactory factoryInstance = IRibbonFactory(_factory);
+        IIvFactory factoryInstance = IIvFactory(_factory);
 
         address adapterAddr = factoryInstance.getAdapter(_adapterName);
         require(adapterAddr != address(0), "Adapter not set");

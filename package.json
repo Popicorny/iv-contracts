@@ -1,8 +1,8 @@
 {
-  "name": "ribbon-finance-contracts",
+  "name": "iv-finance-contracts",
   "version": "1.0.0",
   "license": "MIT",
-  "description": "Smart contracts for Ribbon.finance",
+  "description": "Smart contracts for Iv.finance",
   "main": "truffle-config.js",
   "directories": {
     "test": "test"
@@ -79,7 +79,7 @@
   "scripts": {
     "compile": "npx hardhat compile",
     "test": "npx hardhat test",
-    "verify": "npx truffle run verify RibbonFactory HegicAdapter GammaAdapter ProtocolAdapter AdminUpgradeabilityProxy RibbonThetaVault --license MIT",
+    "verify": "npx truffle run verify IvFactory HegicAdapter GammaAdapter ProtocolAdapter AdminUpgradeabilityProxy IvThetaVault --license MIT",
     "merge-contracts": "sol-merger  --export-plugin SPDXLicenseRemovePlugin \"./contracts/**/*.sol\" ./build/merged",
     "export-artefacts": "ts-node ./scripts/exportABI.ts",
     "ganache": "ganache-cli --fork \"`ts-node scripts/helpers/printTestURI.ts`@`ts-node scripts/helpers/getCurrentBlock.ts`\" --forkCacheSize '-1'",

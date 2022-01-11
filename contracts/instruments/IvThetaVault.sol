@@ -12,15 +12,15 @@ import {
     IProtocolAdapter
 } from "../adapters/IProtocolAdapter.sol";
 import {ProtocolAdapter} from "../adapters/ProtocolAdapter.sol";
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
-import {IRibbonV2Vault, IRibbonV1Vault} from "../interfaces/IRibbonVaults.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
+import {IIvV2Vault, IIvV1Vault} from "../interfaces/IIvVaults.sol";
 import {IVaultRegistry} from "../interfaces/IVaultRegistry.sol";
 import {IWETH} from "../interfaces/IWETH.sol";
 import {ISwap, Types} from "../interfaces/ISwap.sol";
 import {OtokenInterface} from "../interfaces/GammaInterface.sol";
 import {OptionsVaultStorage} from "../storage/OptionsVaultStorage.sol";
 
-contract RibbonThetaVault is DSMath, OptionsVaultStorage {
+contract IvThetaVault is DSMath, OptionsVaultStorage {
     using ProtocolAdapter for IProtocolAdapter;
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
@@ -122,7 +122,7 @@ contract RibbonThetaVault is DSMath, OptionsVaultStorage {
         require(_tokenDecimals > 0, "!_tokenDecimals");
         require(_minimumSupply > 0, "!_minimumSupply");
 
-        IRibbonFactory factoryInstance = IRibbonFactory(_factory);
+        IIvFactory factoryInstance = IIvFactory(_factory);
         address adapterAddr = factoryInstance.getAdapter(_adapterName);
         require(adapterAddr != address(0), "Adapter not set");
 
@@ -177,7 +177,7 @@ contract RibbonThetaVault is DSMath, OptionsVaultStorage {
         require(address(replacementVault) == address(0), "Already sunset");
         require(upgradeTo != address(0), "!upgradeTo");
 
-        replacementVault = IRibbonV2Vault(upgradeTo);
+        replacementVault = IIvV2Vault(upgradeTo);
 
         emit VaultSunset(upgradeTo);
     }
@@ -208,7 +208,7 @@ contract RibbonThetaVault is DSMath, OptionsVaultStorage {
      * @param newWithdrawalFee is the fee paid in tokens when withdrawing
      */
     function setWithdrawalFee(uint256 newWithdrawalFee) external onlyManager {
-        require(newWithdrawalFee > 0, "withdrawalFee != 0");
+        // require(newWithdrawalFee > 0, "withdrawalFee != 0");
 
         // cap max withdrawal fees to 30% of the withdrawal amount
         require(newWithdrawalFee < 0.3 ether, "withdrawalFee >= 30%");
@@ -315,7 +315,7 @@ contract RibbonThetaVault is DSMath, OptionsVaultStorage {
 
         // Send assets to new vault rather than user
         IERC20(asset).safeApprove(vault, withdrawAmount);
-        IRibbonV1Vault(vault).deposit(withdrawAmount);
+        IIvV1Vault(vault).deposit(withdrawAmount);
         uint256 receivedShares = IERC20(vault).balanceOf(address(this));
         IERC20(vault).safeTransfer(msg.sender, receivedShares);
 
@@ -349,7 +349,7 @@ contract RibbonThetaVault is DSMath, OptionsVaultStorage {
      * @notice Moves msg.sender's deposited funds to new vault w/o fees
      */
     function migrate() external nonReentrant {
-        IRibbonV2Vault vault = replacementVault;
+        IIvV2Vault vault = replacementVault;
         require(address(vault) != address(0), "Not sunset");
 
         uint256 maxShares = maxWithdrawableShares();

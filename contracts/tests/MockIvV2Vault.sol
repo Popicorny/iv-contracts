@@ -4,7 +4,7 @@ pragma solidity >=0.7.2;
 import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "@openzeppelin/contracts/token/ERC20/SafeERC20.sol";
 
-contract MockRibbonV2Vault {
+contract MockIvV2Vault {
     using SafeERC20 for IERC20;
     address public asset;
 

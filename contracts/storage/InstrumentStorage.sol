@@ -6,12 +6,12 @@ import {
     ReentrancyGuard
 } from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import {Initializable} from "../lib/upgrades/Initializable.sol";
-import {IRibbonFactory} from "../interfaces/IRibbonFactory.sol";
+import {IIvFactory} from "../interfaces/IIvFactory.sol";
 import {ProtocolAdapterTypes} from "../adapters/IProtocolAdapter.sol";
 import {Ownable} from "../lib/Ownable.sol";
 
 contract InstrumentStorageV1 is Initializable, Ownable, ReentrancyGuard {
-    IRibbonFactory public factory;
+    IIvFactory public factory;
     address public underlying;
     address public strikeAsset;
     address public collateralAsset;

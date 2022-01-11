@@ -1,10 +1,8 @@
-const RibbonThetaVault = artifacts.require("RibbonThetaVault");
+const IvThetaVault = artifacts.require("IvThetaVault");
 const AdminUpgradeabilityProxy = artifacts.require("AdminUpgradeabilityProxy");
 const ProtocolAdapterLib = artifacts.require("ProtocolAdapter");
-const Factory = artifacts.require("RibbonFactory");
 const { encodeCall } = require("@openzeppelin/upgrades");
-const { ethers, BigNumber } = require("ethers");
-const { parseEther } = ethers.utils;
+const { BigNumber } = require("ethers");
 
 const {
   updateDeployedAddresses,
@@ -17,32 +15,28 @@ module.exports = async function (deployer, network) {
   const networkLookup = network.replace("-fork", "");
   const { admin, owner } = ACCOUNTS[networkLookup];
 
-  await deployer.link(ProtocolAdapterLib, RibbonThetaVault);
-  
-  const factory = await Factory.at(DEPLOYMENTS[networkLookup].RibbonFactory);
-  await factory.setAdapter("OPYN_GAMMA", DEPLOYMENTS[networkLookup].GammaAdapterLogic, { from: owner });
-  
-  // Deploying the logic contract
-  const vault = await deployer.deploy(
-    RibbonThetaVault,
-    EXTERNAL_ADDRESSES[networkLookup].assets.weth,
-    DEPLOYMENTS[networkLookup].RibbonFactory,
+  // await ProtocolAdapterLib.deployed();
+
+  await deployer.link(ProtocolAdapterLib, IvThetaVault);
+
+  // // Deploying the logic contract
+  await deployer.deploy(
+    IvThetaVault,
+    EXTERNAL_ADDRESSES[networkLookup].assets.wbtc,
+    DEPLOYMENTS[networkLookup].IvFactory,
     DEPLOYMENTS[networkLookup].VaultRegistry,
     EXTERNAL_ADDRESSES[networkLookup].assets.weth,
     EXTERNAL_ADDRESSES[networkLookup].assets.usdc,
     EXTERNAL_ADDRESSES[networkLookup].airswapSwap,
-    18,
-    // WETH: 10**18, 10**10 0.0000001
-    // WBTC: 0.000001
-    BigNumber.from("10").pow(BigNumber.from("10")).toString(), // WBTC 10**3
-    false,
+    6, // USDC is 6 decimals
+    BigNumber.from("10").pow(BigNumber.from("3")).toString(),
+    true,
     { from: admin }
   );
-  
   await updateDeployedAddresses(
     network,
-    "RibbonETHCoveredCallLogic",
-    vault.address
+    "IvWBTCPutLogic",
+    IvThetaVault.address
   );
 
   // Deploying the proxy contract
@@ -52,15 +46,15 @@ module.exports = async function (deployer, network) {
     [
       owner,
       owner,
-      parseEther("1000").toString(),
-      "Ribbon ETH Theta Vault",
-      "rETH-THETA",
+      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros
+      "IV USDC Theta Vault BTC Put",
+      "iUSDC-BTC-P-THETA",
     ]
   );
 
   await deployer.deploy(
     AdminUpgradeabilityProxy,
-    vault.address,
+    IvThetaVault.address,
     admin,
     initBytes,
     {
@@ -70,7 +64,7 @@ module.exports = async function (deployer, network) {
 
   await updateDeployedAddresses(
     network,
-    "RibbonETHCoveredCall",
+    "IvWBTCPut",
     AdminUpgradeabilityProxy.address
   );
 };

@@ -7,7 +7,7 @@ import {IInstrumentStorage} from "./interfaces/InstrumentInterface.sol";
 import {IChiToken} from "./interfaces/IChiToken.sol";
 import {Ownable} from "./lib/Ownable.sol";
 
-contract RibbonFactoryStorageV1 is Ownable {
+contract IvFactoryStorageV1 is Ownable {
     /**
      * @notice Address of the admin of all instruments
      */
@@ -28,7 +28,7 @@ contract RibbonFactoryStorageV1 is Ownable {
     address[] public adapters;
 }
 
-contract RibbonFactory is Initializable, RibbonFactoryStorageV1 {
+contract IvFactory is Initializable, IvFactoryStorageV1 {
     address constant CHI_GAS_TOKEN = 0x0000000000004946c0e9F43F4Dee607b0eF1fA1c;
     uint256 constant GAS_TOKEN_SUBSIDY = 30;
 

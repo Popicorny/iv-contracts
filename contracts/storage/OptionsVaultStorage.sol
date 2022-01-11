@@ -10,7 +10,7 @@ import {
 import {
     ERC20Upgradeable
 } from "@openzeppelin/contracts-upgradeable/token/ERC20/ERC20Upgradeable.sol";
-import {IRibbonV2Vault} from "../interfaces/IRibbonVaults.sol";
+import {IIvV2Vault} from "../interfaces/IIvVaults.sol";
 import {IVaultRegistry} from "../interfaces/IVaultRegistry.sol";
 
 contract OptionsVaultStorageV1 is
@@ -62,7 +62,7 @@ contract OptionsVaultStorageV2 {
 
 contract OptionsVaultStorageV3 {
     // Contract address of replacement
-    IRibbonV2Vault public replacementVault;
+    IIvV2Vault public replacementVault;
 }
 
 // We are following Compound's method of upgrading new contract implementations
