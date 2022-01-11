@@ -1,6 +1,6 @@
-# Ribbon Finance
+# IV Finance
 
-Ribbon Finance is a new protocol that helps users access crypto structured products for DeFi. It combine options, futures, and fixed income to improve a portfolio's risk-return profile. Please review our [documentation](http://docs.ribbon.finance/) for details about the structured products.
+IV Finance is a new protocol that helps users access crypto structured products for DeFi. It combine options, futures, and fixed income to improve a portfolio's risk-return profile.
 
 ## Getting Started
 
