@@ -22,8 +22,9 @@ module.exports = async function (_deployer, network) {
     ProtocolAdapterLib.address
   );
 
+  /*
   await deployer.link(ProtocolAdapterLib, IvVolatility);
-
+  // KIV
   await deployer.deploy(IvVolatility, { from: admin });
 
   await updateDeployedAddresses(
@@ -31,4 +32,5 @@ module.exports = async function (_deployer, network) {
     "IvVolatilityLogic",
     IvVolatility.address
   );
+  */
 };

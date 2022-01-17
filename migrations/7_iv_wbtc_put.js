@@ -15,14 +15,14 @@ module.exports = async function (deployer, network) {
   const networkLookup = network.replace("-fork", "");
   const { admin, owner } = ACCOUNTS[networkLookup];
 
-  // await ProtocolAdapterLib.deployed();
+  await ProtocolAdapterLib.deployed();
 
   await deployer.link(ProtocolAdapterLib, IvThetaVault);
 
-  // Deploying the logic contract
+  // // Deploying the logic contract
   await deployer.deploy(
     IvThetaVault,
-    EXTERNAL_ADDRESSES[networkLookup].assets.weth,
+    EXTERNAL_ADDRESSES[networkLookup].assets.wbtc,
     DEPLOYMENTS[networkLookup].IvFactory,
     DEPLOYMENTS[networkLookup].VaultRegistry,
     EXTERNAL_ADDRESSES[networkLookup].assets.weth,
@@ -35,7 +35,7 @@ module.exports = async function (deployer, network) {
   );
   await updateDeployedAddresses(
     network,
-    "IvETHPutLogic",
+    "IvWBTCPutLogic",
     IvThetaVault.address
   );
 
@@ -46,9 +46,9 @@ module.exports = async function (deployer, network) {
     [
       owner,
       owner,
-      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros,
-      "IV USDC Theta Vault ETH Put",
-      "iUSDC-ETH-P-THETA",
+      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros
+      "IV USDC Theta Vault BTC Put",
+      "iUSDC-BTC-P-THETA",
     ]
   );
 
@@ -64,7 +64,7 @@ module.exports = async function (deployer, network) {
 
   await updateDeployedAddresses(
     network,
-    "IvETHPut",
+    "IvWBTCPut",
     AdminUpgradeabilityProxy.address
   );
 };

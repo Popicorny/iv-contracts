@@ -2,7 +2,7 @@ const IvThetaVault = artifacts.require("IvThetaVault");
 const AdminUpgradeabilityProxy = artifacts.require("AdminUpgradeabilityProxy");
 const ProtocolAdapterLib = artifacts.require("ProtocolAdapter");
 const { encodeCall } = require("@openzeppelin/upgrades");
-const { BigNumber } = require("ethers");
+const { ethers } = require("ethers");
 
 const {
   updateDeployedAddresses,
@@ -15,7 +15,7 @@ module.exports = async function (deployer, network) {
   const networkLookup = network.replace("-fork", "");
   const { admin, owner } = ACCOUNTS[networkLookup];
 
-  // await ProtocolAdapterLib.deployed();
+  await ProtocolAdapterLib.deployed();
 
   await deployer.link(ProtocolAdapterLib, IvThetaVault);
 
@@ -28,14 +28,14 @@ module.exports = async function (deployer, network) {
     EXTERNAL_ADDRESSES[networkLookup].assets.weth,
     EXTERNAL_ADDRESSES[networkLookup].assets.usdc,
     EXTERNAL_ADDRESSES[networkLookup].airswapSwap,
-    6, // USDC is 6 decimals
-    BigNumber.from("10").pow(BigNumber.from("3")).toString(),
-    true,
+    8,
+    ethers.BigNumber.from("10").pow("3").toString(),
+    false,
     { from: admin }
   );
   await updateDeployedAddresses(
     network,
-    "IvWBTCPutLogic",
+    "IvWBTCCoveredCallLogic",
     IvThetaVault.address
   );
 
@@ -46,9 +46,9 @@ module.exports = async function (deployer, network) {
     [
       owner,
       owner,
-      BigNumber.from("10").pow("12").toString(), // 1,000,000 (6 leading zeros) + 6 leading zeros
-      "IV USDC Theta Vault BTC Put",
-      "iUSDC-BTC-P-THETA",
+      ethers.BigNumber.from("10").pow("11").toString(), // 1000 (3 leading zeros) + 8 leading zeros
+      "IV BTC Theta Vault",
+      "iBTC-THETA",
     ]
   );
 
@@ -64,7 +64,7 @@ module.exports = async function (deployer, network) {
 
   await updateDeployedAddresses(
     network,
-    "IvWBTCPut",
+    "IvWBTCCoveredCall",
     AdminUpgradeabilityProxy.address
   );
 };

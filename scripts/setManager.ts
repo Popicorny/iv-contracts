@@ -35,7 +35,7 @@ async function deployOToken() {
   const signer = getDefaultSigner("m/44'/60'/0'/0/0", network).connect(
     provider
   );
-
+  
   const vault = new ethers.Contract(
     program.address,
     ribbonThetaVaultABI,

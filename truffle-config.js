@@ -22,6 +22,7 @@ module.exports = {
       timeoutBlocks: 20000,
       skipDryRun: true,
     },
+    /*
     "mainnet-sim": {
       host: "127.0.0.1",
       port: 8545,
@@ -41,21 +42,19 @@ module.exports = {
       confirmations: 0,
       timeoutBlocks: 20000,
     },
+    */
     mainnet: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MNEMONIC,
-          process.env.MAINNET_URI,
-          0,
-          10,
-          "m/44'/60'/0'/0/"
+          process.env.KOVAN_MNEMONIC,
+          process.env.MAINNET_URI
         ),
       network_id: 1,
-      gasPrice: 100000000000,
+      gasPrice: 101000000000,
       networkCheckTimeout: 20000,
       confirmations: 1,
       timeoutBlocks: 20000,
-      skipDryRun: false,
+      skipDryRun: true,
     },
   },
 
